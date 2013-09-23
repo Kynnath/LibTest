@@ -25,7 +25,9 @@ class LibTest
 
         // Matrix4 tests
         void DisplayMatrix( mat::Matrix4 const& i_matrix ) const;
-        bool TestMatrix4Identity();
+        bool TestMatrix4Identity() const;
+        bool TestMatrix4Operators() const;
+        bool TestMatrix4Mult() const;
 };
 
 #endif	/* LIBTEST_HPP */

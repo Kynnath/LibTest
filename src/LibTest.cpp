@@ -18,7 +18,7 @@ void LibTest::Run()
 
 bool LibTest::TestMatrix()
 {
-    mat::Matrix4 testMatrix = { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0 };
+    mat::Matrix4 testMatrix = { { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0 } };
     std::cout << "testMatrix: " << std::endl;
     std::cout << "Size: " << sizeof( mat::Matrix4 ) << " Size of double x16: " << sizeof( double ) * 16 << std::endl;
 
@@ -29,6 +29,8 @@ bool LibTest::TestMatrix()
     DisplayMatrix( testMatrix );
 
     TestMatrix4Identity();
+    TestMatrix4Operators();
+    TestMatrix4Mult();
 
     return true;
 }
@@ -47,7 +49,7 @@ void LibTest::DisplayMatrix( mat::Matrix4 const& i_matrix ) const
     }
 }
 
-bool LibTest::TestMatrix4Identity()
+bool LibTest::TestMatrix4Identity() const
 {
     mat::Matrix4 const identityMatrixCopy ( mat::k_identity );
 
@@ -66,6 +68,39 @@ bool LibTest::TestMatrix4Identity()
     uninitializedMatrix.SetIdentity();
     std::cout << "uninitializedMatrix.SetIdentity()\n";
     DisplayMatrix( uninitializedMatrix );
+
+    return true;
+}
+
+bool LibTest::TestMatrix4Operators() const
+{
+    mat::Matrix4 testMatrix = { { 0 } };
+
+    if ( testMatrix( 0, 0 ) == 0 )
+    {
+        // yay
+    }
+
+    //double x = testMatrix( -1, 5 );
+    return true;
+}
+
+bool LibTest::TestMatrix4Mult() const
+{
+    mat::Matrix4 matA ( mat::k_identity ), matB = { { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0 } };
+
+    std::cout << "TestMatrix4Mult()\nmatA x matB:\n";
+    DisplayMatrix( mat::Multiply( matA, matB ) );
+    std::cout << "matB x matA:\n";
+    DisplayMatrix( mat::Multiply( matB, matA ) );
+    std::cout << "identity x 2\n";
+    mat::Matrix4 test = { { 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2 } };
+    matA.Multiply( test );
+    DisplayMatrix( matA );
+    std::cout << "matA x matB:\n";
+    DisplayMatrix( mat::Multiply( matA, matB ) );
+    std::cout << "matB x matA:\n";
+    DisplayMatrix( mat::Multiply( matB, matA ) );
 
     return true;
 }
