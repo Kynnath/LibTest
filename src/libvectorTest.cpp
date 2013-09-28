@@ -147,6 +147,15 @@ bool libvectorTest::testDotProduct()
 bool libvectorTest::testCrossProduct()
 {
     bool pass ( true );
+
+    vec::Vector3 const nullVector = { { 0 } };
+    vec::Vector3 const baseVector = { { 2, 0, 0 } };
+    vec::Vector3 const orthoVector = { { 0, 2, 0 } };
+    vec::Vector3 const resultVector = { { 0, 0, 4 } };
+
+    pass = ( vec::CrossProduct( nullVector, baseVector ).Equals( nullVector ) && pass );
+    pass = ( vec::CrossProduct( baseVector, orthoVector ).Equals( resultVector ) && pass );
+
     return pass;
 }
 
