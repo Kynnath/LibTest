@@ -8,8 +8,6 @@
 #ifndef LIBTEST_HPP
 #define	LIBTEST_HPP
 
-//#include "MAT/Matrix4.hpp"
-
 namespace mat
 {
     struct Matrix4;
@@ -22,6 +20,7 @@ class LibTest
 
     protected:
         bool TestMatrix();
+        bool TestVector();
 
         // Matrix4 tests
         void DisplayMatrix( mat::Matrix4 const& i_matrix ) const;

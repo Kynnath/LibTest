@@ -36,7 +36,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/src/LibTest.o
+	${OBJECTDIR}/src/LibTest.o \
+	${OBJECTDIR}/src/libvectorTest.o
 
 
 # C Compiler Flags
@@ -53,7 +54,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L../libmatrix/lib -llibmatrix
+LDLIBSOPTIONS=-L../libmatrix/lib -L../libvector/lib -llibmatrix -llibvector
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -61,17 +62,22 @@ LDLIBSOPTIONS=-L../libmatrix/lib -llibmatrix
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtest.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtest ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtest ${OBJECTFILES} ${LDLIBSOPTIONS} -s
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O3 -Wall -s -Isrc -I../libmatrix/include -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O3 -Wall -s -DNDEBUG -Isrc -I../libmatrix/include -I../libvector/include -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
 
 ${OBJECTDIR}/src/LibTest.o: src/LibTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -O3 -Wall -s -Isrc -I../libmatrix/include -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/LibTest.o src/LibTest.cpp
+	$(COMPILE.cc) -O3 -Wall -s -DNDEBUG -Isrc -I../libmatrix/include -I../libvector/include -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/LibTest.o src/LibTest.cpp
+
+${OBJECTDIR}/src/libvectorTest.o: src/libvectorTest.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O3 -Wall -s -DNDEBUG -Isrc -I../libmatrix/include -I../libvector/include -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/libvectorTest.o src/libvectorTest.cpp
 
 # Subprojects
 .build-subprojects:

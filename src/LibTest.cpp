@@ -10,10 +10,19 @@
 #include <cstring>
 #include <iostream>
 #include "MAT/Matrix4.hpp"
+#include "libvectorTest.hpp"
 
 void LibTest::Run()
 {
-    TestMatrix();
+    if ( !TestMatrix() )
+    {
+        std::cout << "TestMatrix() failed\n";
+    }
+
+    if ( !TestVector() )
+    {
+        std::cout << "TestVector() failed\n";
+    }
 }
 
 bool LibTest::TestMatrix()
@@ -103,4 +112,19 @@ bool LibTest::TestMatrix4Mult() const
     DisplayMatrix( mat::Multiply( matB, matA ) );
 
     return true;
+}
+
+bool LibTest::TestVector()
+{
+    bool pass ( true );
+
+    pass = ( libvectorTest::testEquality() && pass );
+    pass = ( libvectorTest::testAddition() && pass );
+    pass = ( libvectorTest::testSubstraction() && pass );
+    pass = ( libvectorTest::testScaling() && pass );
+    pass = ( libvectorTest::testMagnitude() && pass );
+    pass = ( libvectorTest::testDotProduct() && pass );
+    pass = ( libvectorTest::testCrossProduct() && pass );
+
+    return pass;
 }
